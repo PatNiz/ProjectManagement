@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ManagmentControl {
-    private ConsolePrinter printer = new ConsolePrinter();
-    private DataReader dataReader = new DataReader(printer);
+    private final ConsolePrinter printer = new ConsolePrinter();
+    private final DataReader dataReader = new DataReader(printer);
 
     public List<Command> listOfProjectCommands(){
         List<Command> projectCommands = new ArrayList();
@@ -51,23 +51,26 @@ public class ManagmentControl {
     }
     public void printListofOptions(List<Command> commands){
         for (Command command : commands) {
-            System.out.println(commands.indexOf(command) + " - " + command.getClearName());
+            printer.printLine(commands.indexOf(command) + " - " + command.getClearName());
         }
     }
     private void chooseOption(List<Command> commands) {
         try {
             int choice = new Scanner(System.in).nextInt();
-            Command command = commands.get(choice);
-            command.execute();
+            executeCommand(commands,choice);
         }
         catch(IndexOutOfBoundsException  e1){
-            System.out.println("THERE IS NO SUCH OPTION,PLEASE RE-ENTER: ");
+            printer.printLine("THERE IS NO SUCH OPTION,PLEASE RE-ENTER: ");
             getOptions(commands);
         }
         catch(InputMismatchException e1){
-            System.out.println("ONLY NUMBERS, PLEASE RE-ENTER: ");
+            printer.printLine("ONLY NUMBERS, PLEASE RE-ENTER: ");
             getOptions(commands);
         }
+    }
+    public void executeCommand(List<Command> commands, int choice){
+        Command command = commands.get(choice);
+        command.execute();
     }
 
     public void controlLoop() {
@@ -115,8 +118,8 @@ public class ManagmentControl {
 
         DOCUMENT(3, "Document panel ");
 
-        private int value;
-        private String description;
+        private final int value;
+        private final String description;
 
         Option(int value, String desc) {
             this.value = value;
