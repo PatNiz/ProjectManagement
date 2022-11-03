@@ -115,7 +115,6 @@ public class ManagmentControl {
         EXIT(0, "Exit"),
         USER(1, "User panel"),
         PROJECT(2, "project panel"),
-
         DOCUMENT(3, "Document panel ");
 
         private final int value;
